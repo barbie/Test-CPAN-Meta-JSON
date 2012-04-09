@@ -8,7 +8,7 @@ my $spec = Test::CPAN::Meta::JSON::Version->new(spec => '2');
 
 is($spec->url('url','http://search.cpan.org/dist/CPAN-Meta/lib/CPAN/Meta/Spec.pm'),1,'valid URL');
 is($spec->url('url','http://'),0);
-is($spec->url('url','test://search.cpan.org/dist/CPAN-Meta/lib/CPAN/Meta/Spec.pm'),0);
+is($spec->url('url','://search.cpan.org/dist/CPAN-Meta/lib/CPAN/Meta/Spec.pm'),0);
 is($spec->url('url','test://'),0);
 is($spec->url('url','test^example^com'),0);
 is($spec->url('url',''),0);
