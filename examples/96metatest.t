@@ -4,15 +4,15 @@ use Test::More;
 plan skip_all => "Author tests not required for installation"
     unless ( $ENV{AUTOMATED_TESTING} );
 
-eval "use Test::JSON::Meta 0.08";
-plan skip_all => "Test::JSON::Meta 0.08 required for testing META.json files" if $@;
+eval "use Test::CPAN::Meta::JSON 0.10";
+plan skip_all => "Test::CPAN::Meta::JSON 0.10 required for testing META.json files" if $@;
 
 plan no_plan;
 
 my $meta = meta_spec_ok(undef,undef,@_);
 
-use Test::JSON::Meta;                           # enter your module name here
-my $version = $Test::JSON::Meta::VERSION;       # enter your module name here
+use MyDistro;                           # enter your module name here
+my $version = $MyDistro::VERSION;       # enter your module name here
 
 is($meta->{version},$version,
     'META.json distribution version matches');
