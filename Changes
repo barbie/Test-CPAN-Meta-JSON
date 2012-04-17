@@ -1,5 +1,8 @@
 # Changes log for Test-CPAN-Meta-JSON
 
+0.12	17/04/2012
+	- spelling fix. (thanks to Florian Schlichting & Gregor Herrmann).
+
 0.11    13/04/2012
 	- RT#74317: imported url validation from CPAN::Meta (Alex Hartmaier).
 	- RT#66692: updated license type (Paul Howarth).
