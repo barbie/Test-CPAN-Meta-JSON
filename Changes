@@ -1,5 +1,9 @@
 # Changes log for Test-CPAN-Meta-JSON
 
+0.13	19/04/2012
+	- further spelling fix. (Florian Schlichting).
+	- removed DSLIP info.
+
 0.12	17/04/2012
 	- spelling fix. (thanks to Florian Schlichting & Gregor Herrmann).
 
