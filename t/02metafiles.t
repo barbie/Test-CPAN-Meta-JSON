@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More  tests => 88;
+use Test::More  tests => 96;
 use Test::CPAN::Meta::JSON::Version;
 use IO::File;
 use JSON;
@@ -40,6 +40,8 @@ $vers = '2';
     { file => 't/samples/20-META.json', fail => 0, errors => 0, bad => 0, faults => 0 },
     { file => 't/samples/21-META.json', fail => 1, errors => 2, bad => 1, faults => 2 },
     { file => 't/samples/22-META.json', fail => 1, errors => 1, bad => 1, faults => 1 },
+    { file => 't/samples/23-META.json', fail => 1, errors => 1, bad => 1, faults => 1 },
+    { file => 't/samples/24-META.json', fail => 0, errors => 0, bad => 0, faults => 0 },
 );
 
 runtests($vers,\@tests);
@@ -66,8 +68,8 @@ sub runtests {
         is(scalar(@errors), $test->{errors}, "'errors' check for $test->{file}");
 
         if(scalar(@errors) != $test->{errors}) {
-            print STDERR "# failed: $test->{file}\n";
-            print STDERR "# errors: $_\n"  for(@errors);
+            diag("failed: $test->{file}");
+            diag("errors: " . join("\n",@errors));
         }
     }
 
@@ -88,8 +90,8 @@ sub runtests {
         is(scalar(@errors), $test->{faults}, "'faults' check for $test->{file}");
 
         if(scalar(@errors) != $test->{faults}) {
-            print STDERR "# failed: $test->{file}\n";
-            print STDERR "# errors: $_\n"  for(@errors);
+            diag("failed: $test->{file}");
+            diag("errors: " . join("\n",@errors));
         }
     }
 }

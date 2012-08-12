@@ -4,13 +4,13 @@ use warnings;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '0.13';
+$VERSION = '0.14';
 
 #----------------------------------------------------------------------------
 
 =head1 NAME
 
-Test::CPAN::Meta::JSON::Version - Validate META.json elements.
+Test::CPAN::Meta::JSON::Version - Validate CPAN META data against the specification
 
 =head1 SYNOPSIS
 
@@ -112,7 +112,7 @@ my %definitions = (
     'no_index'    => $no_index_1_3,
     'optional_features'   => {
       'map'       => {
-        ':key' => { 
+        ':key' => {
           name  => \&identifier,
           'map' => {
             description => { value => \&string },
@@ -123,23 +123,23 @@ my %definitions = (
     },
     'prereqs' => $prereq_map,
     'provides'    => {
-      'map'       => { 
-        ':key' => { 
+      'map'       => {
+        ':key' => {
           name  => \&module,
-          'map' => { 
+          'map' => {
             file    => { mandatory => 1, value => \&file },
             version => { value => \&version } } } }
     },
     'resources'   => {
-      'map'       => { 
+      'map'       => {
         license    => { lazylist => { value => \&url } },
         homepage   => { value => \&url },
-        bugtracker => { 
+        bugtracker => {
           'map' => {
             web     => { value => \&url },
             mailto  => { value => \&string},
           }},
-        repository => { 
+        repository => {
           'map' => {
             web     => { value => \&url },
             url     => { value => \&url },
@@ -398,7 +398,7 @@ my %definitions = (
 The constructor must be passed a valid data structure.
 
 Optionally you may also provide a specification version. This version is then
-use to ensure that the given data structure meets the respective META.yml
+use to ensure that the given data structure meets the respective
 specification definition. If no version is provided the module will attempt to
 deduce the appropriate specification version from the data structure itself.
 
@@ -445,7 +445,7 @@ sub parse {
     my $data = $self->{data};
 
     unless($self->{spec}) {
-        $self->{spec} = $data->{'meta-spec'} && $data->{'meta-spec'}->{'version'} ? $data->{'meta-spec'}->{'version'} : '2';
+        $self->{spec} = $data->{'meta-spec'} && $data->{'meta-spec'}{'version'} ? $data->{'meta-spec'}{'version'} : '2';
     }
 
     $self->check_map($definitions{$self->{spec}},$data);
@@ -541,7 +541,7 @@ sub check_lazylist {
     my ($self,$spec,$data) = @_;
 
     if ( defined $data && ! ref($data) ) {
-      $data = [ $data ];
+        $data = [ $data ];
     }
 
     $self->check_list($spec,$data);
@@ -573,10 +573,10 @@ sub check_list {
             $self->check_lazylist($spec->{'lazylist'},$value);
 
         } elsif ($spec->{':key'}) {
-           $self->check_map($spec,$value);
+            $self->check_map($spec,$value);
 
         } else {
-          $self->_error( "$spec_error associated with '$self->{stack}[-2]'" );
+            $self->_error( "$spec_error associated with '$self->{stack}[-2]'" );
         }
         pop @{$self->{stack}};
     }
@@ -636,10 +636,10 @@ keyword.
 =item * keyword($self,$key,$value)
 
 Validates that key is in an acceptable format for the META.yml specification,
-i.e. any in the character class [-_a-z]. 
+i.e. any in the character class [-_a-z].
 
-For user defined keys, although not explicitly stated in the specifications 
-(v1.0 - v1.4), the convention is to precede the key with a pattern matching 
+For user defined keys, although not explicitly stated in the specifications
+(v1.0 - v1.4), the convention is to precede the key with a pattern matching
 qr{\Ax_}i. Following this any character from the character class [-_a-zA-Z]
 can be used. This clarification has been added to v2.0 of the specification.
 
@@ -647,7 +647,7 @@ can be used. This clarification has been added to v2.0 of the specification.
 
 Validates that key is in an acceptable format for the META.yml specification,
 for an identifier, i.e. any that matches the regular expression
-qr/[a-z][a-z_]/i. 
+qr/[a-z][a-z_]/i.
 
 =item * module($self,$key,$value)
 
@@ -677,7 +677,7 @@ Validates for a legal relation, within a phase, of a pre-requisite map.
 
 =item * anything($self,$key,$value)
 
-Usually reserved for user defined structures, allowing them to be considered 
+Usually reserved for user defined structures, allowing them to be considered
 valid without a need for a specification definition for the structure.
 
 =back
@@ -690,20 +690,21 @@ sub _uri_split {
 
 sub url {
     my ($self,$key,$value) = @_;
-    if(defined $value) {
+    if($value) {
         my ($scheme, $auth, $path, $query, $frag) = _uri_split($value);
 
-        unless ( defined $scheme && length $scheme ) {
+        unless ( $scheme ) {
             $self->_error( "'$value' for '$key' does not have a URL scheme" );
             return 0;
         }
-        unless ( defined $auth && length $auth ) {
+        unless ( $auth ) {
             $self->_error(  "'$value' for '$key' does not have a URL authority" );
             return 0;
         }
         return 1;
+    } else {
+        $value = '<undef>';
     }
-    $value ||= '';
     $self->_error( "'$value' for '$key' is not a valid URL." );
     return 0;
 }
@@ -834,7 +835,7 @@ sub license {
     if(defined $value) {
         return 1    if($value && exists $licenses->{$value});
 
-        # v1 specs caused problems for some with this field, 
+        # v1 specs caused problems for some with this field,
         # so this test is relaxed for v1 tests only.
         return 2    if($value && $self->{spec} < 2);
     } else {
@@ -847,7 +848,7 @@ sub license {
 sub resource {
     my ($self,$key) = @_;
     if(defined $key) {
-        # a valid user defined key should be alphabetic 
+        # a valid user defined key should be alphabetic
         # and contain at least one capital case letter.
         return 1    if($key && $key =~ /^[a-z]+$/i && $key =~ /[A-Z]/);
     } else {
@@ -892,22 +893,20 @@ sub module {
 }
 
 sub release_status {
-  my ($self,$key,$value) = @_;
-  if(defined $value) {
-    my $version = $self->{data}{version} || '';
-    if ( $version =~ /_/ ) {
-      return 1 if ( $value =~ /\A(?:testing|unstable)\z/ );
-      $self->_error( "'$value' for '$key' is invalid for version '$version'" );
+    my ($self,$key,$value) = @_;
+    if(defined $value) {
+        my $version = $self->{data}{version} || '';
+        if ( $version =~ /_/ ) {
+            return 1 if ( $value =~ /\A(?:testing|unstable)\z/ );
+            $self->_error( "'$value' for '$key' is invalid for version '$version'" );
+        } else {
+            return 1 if ( $value =~ /\A(?:stable|testing|unstable)\z/ );
+            $self->_error( "'$value' for '$key' is invalid" );
+        }
+    } else {
+        $self->_error( "'$key' is not defined" );
     }
-    else {
-      return 1 if ( $value =~ /\A(?:stable|testing|unstable)\z/ );
-      $self->_error( "'$value' for '$key' is invalid" );
-    }
-  }
-  else {
-    $self->_error( "'$key' is not defined" );
-  }
-  return 0;
+    return 0;
 }
 
 sub custom_1 {

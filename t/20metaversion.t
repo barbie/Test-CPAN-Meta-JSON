@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More  tests => 163;
+use Test::More  tests => 167;
 use Test::CPAN::Meta::JSON::Version;
 
 my $spec = Test::CPAN::Meta::JSON::Version->new(spec => '2');
@@ -12,7 +12,7 @@ is($spec->url('url','://search.cpan.org/dist/CPAN-Meta/lib/CPAN/Meta/Spec.pm'),0
 is($spec->url('url','test://'),0);
 is($spec->url('url','test^example^com'),0);
 is($spec->url('url',''),0);
-is($spec->url('url',undef),0);
+is($spec->url('url'),0);
 
 is($spec->url('url','http://www.gnu.org/licenses/#GPL'),1,'valid URL: http://www.gnu.org/licenses/#GPL');
 
@@ -98,6 +98,7 @@ is($spec->resource('MAILListing'),1,'valid resource - Caps start');
 is($spec->resource('mailLISTing'),1,'valid resource - Caps middle');
 is($spec->resource('mailListing'),1,'valid resource - 1 cap middle');
 is($spec->resource('maillisting'),0);
+is($spec->resource('1234567890'),0);
 is($spec->resource(''),0);
 is($spec->resource(undef),0);
 
@@ -116,6 +117,9 @@ is($spec->module('Test::CPAN::Meta::JSON'),1);
 is($spec->module('Test-JSON-Meta'),0);
 is($spec->module(''),0);
 is($spec->module(undef),0);
+
+$spec->{data}{version} = undef;
+is($spec->release_status('release_status',$_),1,"valid release_status $_")   for(qw(stable testing unstable));
 
 $spec->{data}{version} = '0.01';
 is($spec->release_status('release_status',$_),1,"valid release_status $_")   for(qw(stable testing unstable));

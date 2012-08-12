@@ -1,5 +1,12 @@
 # Changes log for Test-CPAN-Meta-JSON
 
+0.14	12/08/2012
+        - added minimum perl version (5.006).
+        - reworked Makefile.PL for clarity.
+	- implemented Perl::Critic suggestions.
+	- added meta_json_ok test and example.
+	- several Version.pm updates.
+
 0.13	19/04/2012
 	- further spelling fix. (Florian Schlichting).
 	- removed DSLIP info.

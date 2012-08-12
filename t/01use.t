@@ -7,4 +7,3 @@ BEGIN {
 	use_ok( 'Test::CPAN::Meta::JSON' );
 	use_ok( 'Test::CPAN::Meta::JSON::Version' );
 }
-
