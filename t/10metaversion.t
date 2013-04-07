@@ -95,7 +95,6 @@ is($spec->module(''),0);
 is($spec->module(undef),0);
 
 
-
 my $hash_spec = { file       => { list => { value => 'string' } },
                   directory  => { list => { value => 'string' } },
                   'package'  => { list => { value => 'string' } },

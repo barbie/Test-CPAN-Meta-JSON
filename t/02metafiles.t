@@ -104,4 +104,3 @@ sub _readdata {
     $fh->close;
     return decode_json($data);
 }
-

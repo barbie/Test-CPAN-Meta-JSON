@@ -151,8 +151,6 @@ is($spec->relation(''),0,'invalid relation <empty string>');
 is($spec->relation(undef),0,'invalid relation <undef>');
 
 
-
-
 my $hash_spec = { file       => { list => { value => 'string' } },
                   directory  => { list => { value => 'string' } },
                   'package'  => { list => { value => 'string' } },
