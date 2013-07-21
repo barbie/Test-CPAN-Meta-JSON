@@ -1,6 +1,6 @@
 {
     "name": "Test-CPAN-Meta-JSON",
-    "version": "0.14",
+    "version": "0.15",
     "abstract": "Validate your CPAN META.json files",
     "author": ["Barbie <barbie@cpan.org>"],
 
@@ -45,11 +45,11 @@
     "provides": {
         "Test::CPAN::Meta::JSON": {
             "file": "lib/Test/CPAN/Meta/JSON.pm",
-            "version": "0.14"
+            "version": "0.15"
         },
         "Test::CPAN::Meta::JSON::Version": {
             "file": "lib/Test/CPAN/Meta/JSON/Version.pm",
-            "version": "0.14"
+            "version": "0.15"
         }
     },
     "no_index": {
