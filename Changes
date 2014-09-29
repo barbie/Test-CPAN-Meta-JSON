@@ -1,4 +1,7 @@
-# Changes log for Test-CPAN-Meta-JSON
+Changes log for Test-CPAN-Meta-JSON
+===================================
+
+        - fixed license fields in META.json to be lists.
 
 0.15    2013-07-21
         - change file dates changed to meet W3CDTF standards.
