@@ -15,7 +15,9 @@
     "keywords" : [
         "qa",
         "cpan",
-        "testing"
+        "testing",
+        "meta",
+        "json"
     ],
 
     "prereqs" : {
