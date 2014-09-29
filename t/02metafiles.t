@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More  tests => 96;
+use Test::More  tests => 116;
 use Test::CPAN::Meta::JSON::Version;
 use IO::File;
 use JSON;
@@ -44,6 +44,11 @@ $vers = '2';
     { file => 't/samples/24-META.json', fail => 0, errors => 0, bad => 0, faults => 0 },
 );
 
+runtests($vers,\@tests);
+
+# Version 2.0 tests
+
+$vers = '2.0';
 runtests($vers,\@tests);
 
 sub runtests {
