@@ -94,7 +94,7 @@ my %definitions = (
     'author'              => { mandatory => 1, lazylist => { value => \&string } },
     'dynamic_config'      => { mandatory => 1, value => \&boolean },
     'generated_by'        => { mandatory => 1, value => \&string  },
-    'license'             => { mandatory => 1, lazylist => { value => \&license } },
+    'license'             => { mandatory => 1, list => { value => \&license } },
     'meta-spec' => {
       mandatory => 1,
       'map' => {
@@ -132,7 +132,7 @@ my %definitions = (
     },
     'resources'   => {
       'map'       => {
-        license    => { lazylist => { value => \&url } },
+        license    => { list => { value => \&url } },
         homepage   => { value => \&url },
         bugtracker => {
           'map' => {

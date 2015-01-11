@@ -4,6 +4,7 @@ Changes log for Test-CPAN-Meta-JSON
         - fixed license fields in META.json to be lists.
         - extended META test suite.
         - added '2.0' as an alias to '2' version spec.
+        - license MUST be a list of strings.
 
 0.15    2013-07-21
         - change file dates changed to meet W3CDTF standards.
