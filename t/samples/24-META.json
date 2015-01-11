@@ -17,7 +17,7 @@
       "Module-Build List <module-build@perl.org>"
    ],
    "release_status" : "stable",
-   "license" : "perl_5",
+   "license" : [ "perl_5" ],
    "description" : "Module::Build is a system for building, testing, and installing Perl modules.  It is meant to be an alternative to ExtUtils::MakeMaker... blah blah blah",
    "keywords" : [
       "toolchain",
