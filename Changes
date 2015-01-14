@@ -1,6 +1,7 @@
 Changes log for Test-CPAN-Meta-JSON
 ===================================
 
+0.16    2015-01-14
         - fixed license fields in META.json to be lists.
         - extended META test suite.
         - added '2.0' as an alias to '2' version spec.
